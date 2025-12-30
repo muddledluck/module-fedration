@@ -40,6 +40,7 @@ module.exports = {
       exposes: {
         './Button': './src/Button',
         './UserList': './src/UserList',
+        './RemoteCounter': './src/RemoteCounterApp',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^18.3.0' },

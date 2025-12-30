@@ -8,6 +8,7 @@ import './index.css';
 
 const RemoteButton = React.lazy(() => import('remoteApp/Button'));
 const RemoteUserList = React.lazy(() => import('remoteApp/UserList'));
+const RemoteCounter = React.lazy(() => import('remoteApp/RemoteCounter'));
 
 const Dashboard = () => {
   const count = useSelector((state) => state.count);
@@ -36,6 +37,12 @@ const Dashboard = () => {
               <div style={{ border: '1px dashed #ccc', padding: '10px' }}>
                   <h4>Remote Button</h4>
                   <RemoteButton onIncrement={() => dispatch({ type: 'INCREMENT' })} />
+              </div>
+
+               {/* Feature 3: Remote Independent Redux Store */}
+              <div style={{ border: '1px dashed #ccc', padding: '10px' }}>
+                  <h4>Remote Independent Store</h4>
+                  <RemoteCounter />
               </div>
 
               {/* Feature 2: Embed User List in Dashboard */}
