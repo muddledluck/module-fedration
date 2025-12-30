@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.host-container {
+  border: 2px solid #333;
+  padding: 20px;
+  background-color: white;
+}
+
+/* INTENTIONAL CONFLICT TEST */
+/* Tailwind's bg-red-500 is typically red. We make it blue here. */
+.bg-red-500 {
+  background-color: blue !important;
+  color: white;
+  padding: 10px;
+}
+
+/* Generic element conflict test */
+button {
+  border: 5px solid purple; /* Will this leak to the remote button? */
+}
