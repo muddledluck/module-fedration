@@ -1,7 +1,11 @@
 import React from 'react';
 import './index.css'; // Ensure Tailwind logic is pulled in if not already
 
-const Button = ({ onIncrement }) => {
+interface ButtonProps {
+    onIncrement: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ onIncrement }) => {
   return (
     <div className="p-4 border border-gray-300 rounded shadow-lg">
         <h3 className="text-xl font-bold mb-2">Remote Button Component</h3>

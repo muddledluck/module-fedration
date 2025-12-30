@@ -1,13 +1,24 @@
 import React from 'react';
 
-const dummyUsers = [
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+}
+
+const dummyUsers: User[] = [
   { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin' },
   { id: 2, name: 'Bob Smith', email: 'bob@example.com', role: 'Editor' },
   { id: 3, name: 'Charlie Brown', email: 'charlie@example.com', role: 'Viewer' },
   { id: 4, name: 'Diana Prince', email: 'diana@example.com', role: 'Admin' },
 ];
 
-const UserList = ({ onUserSelect }) => {
+interface UserListProps {
+    onUserSelect: (user: User) => void;
+}
+
+const UserList: React.FC<UserListProps> = ({ onUserSelect }) => {
   return (
     <div className="p-6 bg-white rounded shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">User List (Remote Component)</h2>

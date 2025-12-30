@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/index',
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
   },
   devServer: {
     static: {
@@ -20,11 +20,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['@babel/preset-react'],
+          presets: ['@babel/preset-react', '@babel/preset-typescript'],
         },
       },
       {
