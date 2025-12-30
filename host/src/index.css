@@ -19,6 +19,4 @@ body {
 }
 
 /* Generic element conflict test */
-button {
-  border: 5px solid purple; /* Will this leak to the remote button? */
-}
+/* Conflict removed */
