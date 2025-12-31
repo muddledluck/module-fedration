@@ -79,3 +79,57 @@ Instead of sharing the *Store Instance* (which couples the redux logic), you str
 | **Decoupling** | Low | Low | Low | High |
 | **Type Safety** | High | High | Low | Moderate |
 | **Best For** | Specific Components | extensive Sharing | Quick Hacks | Large/Mixed Tech Stacks |
+
+---
+
+## TypeScript Strategy: Consuming JS Host in TS Remote
+
+A common challenge in Module Federation is mismatched languages: The Host is JavaScript (untyped), but the Remote is TypeScript.
+
+**Q: How does the Remote know the types of the Host's Redux store?**<br>
+**A: The Host cannot export types because it is JavaScript. The Remote must "reverse engineer" or contractually define the types locally.**
+
+### Step-by-Step Solution
+
+Since you cannot import `RootState` from a JS file, you must define the shape of the Host's state manually in the Remote application.
+
+1.  **Create a Type Declaration**: In the Remote app, create a file (e.g., `src/declarations.d.ts` or `src/hostMap.ts`) to define the expected Host state.
+
+```typescript
+// remote/src/hostTypes.ts
+
+// Define the shape of the part of the Host store you care about
+export interface HostState {
+  count: number;
+  user?: {
+    name: string;
+    id: number;
+  };
+}
+
+// Define the detailed actions if you plan to dispatch them from Remote
+export type HostActions =
+  | { type: 'INCREMENT' }
+  | { type: 'DECREMENT' };
+```
+
+2.  **Combine with Local State**: Use union types or intersection types in your components to handle both states.
+
+```typescript
+import { HostState } from './hostTypes';
+import { RootState as RemoteState } from './store';
+
+// Combined state for useSelector
+type GlobalState = RemoteState & { host: HostState } | any; // 'any' fallback is often needed for dynamic federation
+```
+
+3.  **Use it in Components**:
+
+```typescript
+const count = useSelector((state: GlobalState) => {
+    // Safely access potentially missing host state
+    return state.count ?? state.counter?.value ?? 0;
+});
+```
+
+**Conclusion**: You DO NOT (and cannot) pass the `RootState` type from the JS Host. You must recreate the interface in the Remote application based on what you know about the Host's implementation.
